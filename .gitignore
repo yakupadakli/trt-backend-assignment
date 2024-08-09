@@ -1,0 +1,10 @@
+.DS_Store
+.npm
+.env
+
+coverage/
+node_modules/
+dist/
+.vscode/
+.idea/
+logs/

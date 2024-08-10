@@ -6,6 +6,11 @@ const cors = require('cors');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 
+const ApiError = require('./errors/ApiError');
+const errorHandler = require('./middlewares/errorHandler');
+const { stringFormat } = require('./utils/helper');
+const { NO_ENDPOINT } = require('./constants/messages/error');
+
 const createServer = () => {
   const app = express();
   app.use(cors());
@@ -55,12 +60,15 @@ const createServer = () => {
   //! Not found
   app.use((req, res, next) => {
     next(
-      new Error(
-        `There is no endpoint like ${req.path} for ${req.method} request.`,
-        500,
+      new ApiError(
+        stringFormat(NO_ENDPOINT, { path: req.path, method: req.method }),
+        404,
       ),
     );
   });
+
+  // Error handler
+  app.use(errorHandler);
 
   return app;
 };

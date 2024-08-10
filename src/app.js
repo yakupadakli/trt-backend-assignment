@@ -24,21 +24,18 @@ const handleShutdown = async (signal) => {
   });
 };
 
-// Start the server
 const server = app.listen(port, async () => {
   console.info(`App listening on port ${port}!`);
   // Connecting to db etc...
   await loadDependencies();
 });
 
-// Listen for termination signals for graceful shutdown
 process.on('SIGINT', () => handleShutdown('SIGINT'));
 process.on('SIGTERM', () => handleShutdown('SIGTERM'));
 
 // Ensure server shuts down properly on unhandled rejections
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-  // You might want to perform some cleanup here before exiting
 
   process.exit(1);
 });

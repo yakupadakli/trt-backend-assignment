@@ -17,5 +17,8 @@ export default [
       },
     },
   },
+  {
+    ignores: ['**/*.test.js', 'node_modules/', 'dist/', 'build/', 'coverage/'],
+  },
   pluginJs.configs.recommended,
 ];

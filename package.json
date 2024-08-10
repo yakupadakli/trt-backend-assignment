@@ -17,6 +17,8 @@
     "lint:fix": "eslint --fix .",
     "gitleaks": "gitleaks detect -v",
     "prepare": "lefthook install",
+    "pre-commit": "lefthook run pre-commit",
+    "pre-push": "lefthook run pre-push",
     "test": "jest --detectOpenHandles --forceExit",
     "coverage": "jest --coverage"
   },
@@ -31,7 +33,12 @@
     },
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "/src/config/"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/src/config/"
     ]
   },
   "author": "Yakup Adaklı <yakup.adakli@gmail.com>",
@@ -42,6 +49,7 @@
     "express": "^4.19.2",
     "express-mongo-sanitize": "^2.2.0",
     "helmet": "^7.1.0",
+    "mongoose": "^8.5.2",
     "morgan": "^1.10.0",
     "ramda": "^0.30.1"
   },

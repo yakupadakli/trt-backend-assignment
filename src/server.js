@@ -46,7 +46,7 @@ const createServer = () => {
   // Express json to get json payloads from body
   app.use(express.json());
 
-  app.get('/api', (req, res) => {
+  app.get('/api/v1', (req, res) => {
     res.status(200).json({
       message: 'Welcome to the API.',
     });
@@ -57,6 +57,7 @@ const createServer = () => {
     next(
       new Error(
         `There is no endpoint like ${req.path} for ${req.method} request.`,
+        500,
       ),
     );
   });

@@ -21,7 +21,7 @@ describe('App Server', () => {
   });
 
   it('should respond to the /api route', async () => {
-    const response = await request(app).get('/api');
+    const response = await request(app).get('/api/v1');
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('message');
     expect(response.body.message).toBe('Welcome to the API.');

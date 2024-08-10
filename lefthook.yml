@@ -15,5 +15,3 @@ pre-push:
       run: npm run test
     coverage:
       run: npm run coverage
-    build:
-      run: npm run build

@@ -70,7 +70,7 @@ class UserService {
     const { email } = data;
     let user = await this.dataAccess.findByEmail(email);
     if (!user) {
-      const password = await bcrypt.hash(randomUUID(), 10);
+      const password = randomUUID();
       await this.dataAccess.createUser({ ...data, password });
       user = await this.dataAccess.findByEmail(email);
     }

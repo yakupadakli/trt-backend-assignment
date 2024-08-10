@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const { randomUUID } = require('crypto');
+
 const UserDataAccess = require('../data-access/user.data-access');
 const config = require('../config');
 
@@ -62,6 +64,19 @@ class UserService {
 
   async getUserById(userId) {
     return this.dataAccess.getById(userId);
+  }
+
+  async getGoogleUserToken(data) {
+    const { email } = data;
+    let user = await this.dataAccess.findByEmail(email);
+    if (!user) {
+      const password = await bcrypt.hash(randomUUID(), 10);
+      await this.dataAccess.createUser({ ...data, password });
+      user = await this.dataAccess.findByEmail(email);
+    }
+
+    const token = await this.generateToken(user);
+    return { ...token };
   }
 }
 

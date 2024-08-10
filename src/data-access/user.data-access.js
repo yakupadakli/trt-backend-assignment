@@ -15,8 +15,8 @@ class UserDataAccess extends BaseDataAccess {
   }
 
   async createUser(data) {
-    const { name, surname, username, email, password } = data;
-    return this._create({ name, surname, username, email, password });
+    const { name, surname, username, email, password, googleId } = data;
+    return this._create({ name, surname, username, email, password, googleId });
   }
 
   async getById(userId) {

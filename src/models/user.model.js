@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
   surname: { type: String },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  googleId: { type: String },
 });
 
 UserSchema.plugin(globalSettingsPlugin);

@@ -4,19 +4,32 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+const passport = require('passport');
+const session = require('express-session');
 const mongoSanitize = require('express-mongo-sanitize');
 
+const userRouter = require('./routes/user.route');
+const authRouter = require('./routes/auth.route');
 const errorHandler = require('./middlewares/errorHandler');
 const RateLimiter = require('./middlewares/rateLimiter');
 const { stringFormat } = require('./utils/helper');
 const { NO_ENDPOINT } = require('./constants/messages/error');
 const { NotFound } = require('./errors');
 
-const userRouter = require('./routes/user.route');
-
 const createServer = () => {
   const app = express();
   const rateLimiter = new RateLimiter();
+
+  app.use(
+    session({
+      secret: 'your_secret_key',
+      resave: false,
+      saveUninitialized: true,
+    }),
+  );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   app.use(cors());
   app.use(helmet());
@@ -59,6 +72,7 @@ const createServer = () => {
   // Express json to get json payloads from body
   app.use(express.json());
 
+  app.use('/auth', authRouter);
   app.use('/api/v1/users', userRouter);
 
   app.get('/api/v1', rateLimiter.sensitiveLimiter(), (req, res) => {

@@ -12,6 +12,8 @@ const { stringFormat } = require('./utils/helper');
 const { NO_ENDPOINT } = require('./constants/messages/error');
 const { NotFound } = require('./errors');
 
+const userRouter = require('./routes/user.route');
+
 const createServer = () => {
   const app = express();
   const rateLimiter = new RateLimiter();
@@ -56,6 +58,8 @@ const createServer = () => {
 
   // Express json to get json payloads from body
   app.use(express.json());
+
+  app.use('/api/v1/users', userRouter);
 
   app.get('/api/v1', rateLimiter.sensitiveLimiter(), (req, res) => {
     res.status(200).json({

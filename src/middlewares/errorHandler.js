@@ -9,6 +9,7 @@ const errorHandler = (error, req, res, next) => {
     code: error.code || ERROR_CODES.UNKNOWN,
     name: error.name || 'Error',
     message: error.msg || INTERNAL_SERVER_ERROR,
+    field: error.field || undefined,
   });
 };
 

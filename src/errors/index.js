@@ -20,7 +20,18 @@ class NotFound extends ApiError {
   }
 }
 
+class ValidationError extends ApiError {
+  code = ERROR_CODES.VALIDATION_ERROR;
+  field = '';
+
+  constructor(message, field = '') {
+    super(message, httpStatus.BAD_REQUEST);
+    this.field = field;
+  }
+}
+
 module.exports = {
   TooManyRequest,
   NotFound,
+  ValidationError,
 };

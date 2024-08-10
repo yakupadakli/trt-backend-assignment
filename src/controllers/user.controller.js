@@ -2,13 +2,17 @@ require('express-async-errors');
 
 const httpStatus = require('http-status');
 
+const UserService = require('../services/user.service');
+
+const userService = new UserService();
+
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log('email', email);
-  console.log('password', password);
+
+  const result = await userService.login(email, password);
   const response = {
     success: true,
-    result: [],
+    result,
   };
   res.status(httpStatus.OK).json(response);
 };

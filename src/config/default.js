@@ -17,4 +17,9 @@ module.exports = {
     dbOption: process.env.DB_OPTION || 'retryWrites=true&w=majority',
     uriPrefix: process.env.MONGO_URI_PREFIX || 'mongodb',
   },
+  jwt: {
+    secret: process.env.TOKEN_SECRET || 'secret',
+    expiresIn: process.env.TOKEN_EXPIRES_IN || '1d',
+  },
+  authTokenType: 'Bearer',
 };

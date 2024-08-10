@@ -4,6 +4,10 @@ const ERROR_CODES = {
   UNKNOWN: -3,
 
   TOO_MANY_REQUESTS: 9000,
+
+  // User
+  USER_NOT_FOUND: 1000,
+  USER_EMAIL_OR_PASSWORD_INCORRECT: 1100,
 };
 
 module.exports = { ERROR_CODES };

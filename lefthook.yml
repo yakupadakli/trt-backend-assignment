@@ -1,0 +1,19 @@
+pre-commit:
+  commands:
+    lint:
+      run: npm run lint
+    format:
+      run: npm run format:check
+    format-fix:
+      run: npm run format
+    gitLeaks:
+      run: npm run gitleaks
+
+pre-push:
+  commands:
+    test:
+      run: npm run test
+    coverage:
+      run: npm run coverage
+    build:
+      run: npm run build

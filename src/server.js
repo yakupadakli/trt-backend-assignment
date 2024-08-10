@@ -6,7 +6,6 @@ const cors = require('cors');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 
-
 const createServer = () => {
   const app = express();
   app.use(cors());
@@ -16,6 +15,7 @@ const createServer = () => {
   app.use(mongoSanitize());
 
   // Check if there is any folder named logs to create .log file
+  /* istanbul ignore next */
   if (!fs.existsSync(path.join(__dirname, './logs'))) {
     fs.mkdirSync(path.join(__dirname, './logs'));
   }
@@ -48,7 +48,7 @@ const createServer = () => {
 
   app.get('/api', (req, res) => {
     res.status(200).json({
-      message: 'Welcome to the API',
+      message: 'Welcome to the API.',
     });
   });
 
@@ -57,7 +57,6 @@ const createServer = () => {
     next(
       new Error(
         `There is no endpoint like ${req.path} for ${req.method} request.`,
-        404,
       ),
     );
   });

@@ -9,10 +9,12 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const router = Router();
 
 // Serialize and Deserialize User
+// istanbul ignore next
 passport.serializeUser((user, done) => {
   done(null, user);
 });
 
+// istanbul ignore next
 passport.deserializeUser((obj, done) => {
   done(null, obj);
 });

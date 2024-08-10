@@ -25,6 +25,7 @@ module.exports = {
   google: {
     clientId: process.env.GOOGLE_CLIENT_ID || 'client_id',
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'client_secret',
-    redirectUri: process.env.GOOGLE_REDIRECT_URI || '/auth/google/redirect',
+    redirectUri:
+      process.env.GOOGLE_REDIRECT_URI || '/api/v1/auth/google/redirect',
   },
 };

@@ -72,7 +72,7 @@ const createServer = () => {
   // Express json to get json payloads from body
   app.use(express.json());
 
-  app.use('/auth', authRouter);
+  app.use('/api/v1/auth', authRouter);
   app.use('/api/v1/users', userRouter);
 
   app.get('/api/v1', rateLimiter.sensitiveLimiter(), (req, res) => {

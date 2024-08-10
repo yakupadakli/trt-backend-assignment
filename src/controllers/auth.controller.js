@@ -9,7 +9,7 @@ const userService = new UserService();
 const getGoogleUserToken = async (req, res) => {
   const {
     id: googleId,
-    name: { familyName: name, givenName: surname },
+    name: { familyName: surname, givenName: name },
     emails,
   } = req.user;
   const email = emails?.[0]?.value;

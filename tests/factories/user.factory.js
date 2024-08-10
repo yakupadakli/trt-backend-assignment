@@ -7,7 +7,6 @@ const User = require('../../src/models/user.model');
 const UserFactory = new Factory()
   .attrs({
     _id: () => new Types.ObjectId(),
-    uuid: () => faker.string.uuid(),
     name: () => faker.lorem.sentence(),
     username: () => faker.internet.userName(),
     password: () => faker.internet.password(),

@@ -11,14 +11,14 @@ class BaseDataAccess {
   async _getAll(query = {}) {
     return this.BaseModel.find(query)
       .populate(this.populateOptions)
-      .lean()
+      .lean({ virtuals: true })
       .exec();
   }
 
   async _get(query) {
     return this.BaseModel.findOne(query)
       .populate(this.populateOptions)
-      .lean()
+      .lean({ virtuals: true })
       .exec();
   }
 
@@ -26,7 +26,7 @@ class BaseDataAccess {
     return this.BaseModel.findOneAndUpdate(query, updateQuery, {
       new: true,
     })
-      .lean()
+      .lean({ virtuals: true })
       .exec();
   }
 

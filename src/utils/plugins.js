@@ -1,3 +1,5 @@
+const leanVirtuals = require('mongoose-lean-virtuals');
+
 const globalSettingsPlugin = (schema) => {
   schema.set('timestamps', true);
   schema.set('versionKey', false);
@@ -22,6 +24,8 @@ const globalSettingsPlugin = (schema) => {
     versionKey: false,
     transform: transformFunction,
   });
+
+  schema.plugin(leanVirtuals);
 };
 
 module.exports = { globalSettingsPlugin };

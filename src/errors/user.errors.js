@@ -11,7 +11,7 @@ class EmailOrPasswordIncorrectError extends ApiError {
   code = ERROR_CODES.USER_EMAIL_OR_PASSWORD_INCORRECT;
 
   constructor() {
-    super(USER_EMAIL_OR_PASSWORD_INCORRECT, httpStatus.BAD_REQUEST);
+    super(USER_EMAIL_OR_PASSWORD_INCORRECT, httpStatus.UNAUTHORIZED);
   }
 }
 

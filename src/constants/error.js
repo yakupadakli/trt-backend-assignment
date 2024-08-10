@@ -8,6 +8,7 @@ const ERROR_CODES = {
   // User
   USER_NOT_FOUND: 1000,
   USER_EMAIL_OR_PASSWORD_INCORRECT: 1100,
+  USER_ALREADY_EXISTS: 1200,
 };
 
 module.exports = { ERROR_CODES };

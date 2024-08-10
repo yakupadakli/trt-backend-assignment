@@ -6,6 +6,7 @@ const VALIDATION_ERROR = 'Validation error.';
 // User
 const USER_NOT_FOUND = 'User not found.';
 const USER_EMAIL_OR_PASSWORD_INCORRECT = 'Email or password is incorrect.';
+const USER_ALREADY_EXISTS = 'User already exists.';
 
 module.exports = {
   INTERNAL_SERVER_ERROR,
@@ -16,4 +17,5 @@ module.exports = {
   // User
   USER_NOT_FOUND,
   USER_EMAIL_OR_PASSWORD_INCORRECT,
+  USER_ALREADY_EXISTS,
 };

@@ -4,7 +4,10 @@ const jwt = require('jsonwebtoken');
 const UserDataAccess = require('../data-access/user.data-access');
 const config = require('../config');
 
-const { EmailOrPasswordIncorrectError } = require('../errors');
+const {
+  EmailOrPasswordIncorrectError,
+  UserAlreadyExistsError,
+} = require('../errors');
 
 const { TOKEN_TYPES } = require('../constants');
 
@@ -25,6 +28,18 @@ class UserService {
     }
 
     throw new EmailOrPasswordIncorrectError();
+  }
+
+  async register(data) {
+    const { username, email } = data;
+
+    const query = { $or: [{ username }, { email }] };
+    const user = await this.dataAccess.filterUsers(query);
+    if (user.length > 0) {
+      throw new UserAlreadyExistsError();
+    }
+
+    return this.dataAccess.createUser(data);
   }
 
   async generateToken(user, type = TOKEN_TYPES.ACCESS) {

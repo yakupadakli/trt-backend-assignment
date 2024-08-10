@@ -30,6 +30,6 @@ describe('App Server', () => {
   it('should respond with a 404 error for an unknown route', async () => {
     const response = await request(app).get('/unknown-route');
 
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(404);
   });
 });

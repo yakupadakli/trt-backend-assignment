@@ -6,13 +6,16 @@ const cors = require('cors');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 
-const ApiError = require('./errors/ApiError');
 const errorHandler = require('./middlewares/errorHandler');
+const RateLimiter = require('./middlewares/rateLimiter');
 const { stringFormat } = require('./utils/helper');
 const { NO_ENDPOINT } = require('./constants/messages/error');
+const { NotFound } = require('./errors');
 
 const createServer = () => {
   const app = express();
+  const rateLimiter = new RateLimiter();
+
   app.use(cors());
   app.use(helmet());
 
@@ -48,10 +51,13 @@ const createServer = () => {
     ),
   );
 
+  // Rate limiter
+  app.use(rateLimiter.commonLimiter());
+
   // Express json to get json payloads from body
   app.use(express.json());
 
-  app.get('/api/v1', (req, res) => {
+  app.get('/api/v1', rateLimiter.sensitiveLimiter(), (req, res) => {
     res.status(200).json({
       message: 'Welcome to the API.',
     });
@@ -60,9 +66,8 @@ const createServer = () => {
   //! Not found
   app.use((req, res, next) => {
     next(
-      new ApiError(
+      new NotFound(
         stringFormat(NO_ENDPOINT, { path: req.path, method: req.method }),
-        404,
       ),
     );
   });

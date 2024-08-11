@@ -1,10 +1,16 @@
 const Joi = require('joi');
 
-const taskSchema = Joi.object({
+const taskCreateSchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().required(),
 });
 
+const taskUpdateSchema = Joi.object({
+  title: Joi.string(),
+  description: Joi.string(),
+});
+
 module.exports = {
-  taskSchema,
+  taskCreateSchema,
+  taskUpdateSchema,
 };

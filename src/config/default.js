@@ -28,4 +28,8 @@ module.exports = {
     redirectUri:
       process.env.GOOGLE_REDIRECT_URI || '/api/v1/auth/google/redirect',
   },
+  logger: {
+    level: process.env.LOG_LEVEL || 'error',
+    fileDir: process.env.LOG_FILE_DIR || 'logs',
+  },
 };

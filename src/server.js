@@ -1,3 +1,5 @@
+require('express-async-errors');
+
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
@@ -13,9 +15,13 @@ const userRouter = require('./routes/user.route');
 const taskRouter = require('./routes/task.route');
 const errorHandler = require('./middlewares/errorHandler');
 const RateLimiter = require('./middlewares/rateLimiter');
+
+const { errorLogHandler } = require('./logger/logHandler');
 const { stringFormat } = require('./utils/helper');
 const { NO_ENDPOINT } = require('./constants/messages/error');
 const { NotFound } = require('./errors');
+
+const config = require('./config')();
 
 const createServer = () => {
   const app = express();
@@ -38,10 +44,14 @@ const createServer = () => {
   // sanitize request data
   app.use(mongoSanitize());
 
-  // Check if there is any folder named logs to create .log file
+  const {
+    logger: { fileDir: logFileDir },
+  } = config;
+  const rootDirectory = path.resolve(__dirname, '../');
+
   /* istanbul ignore next */
-  if (!fs.existsSync(path.join(__dirname, './logs'))) {
-    fs.mkdirSync(path.join(__dirname, './logs'));
+  if (!fs.existsSync(path.join(rootDirectory, logFileDir))) {
+    fs.mkdirSync(path.join(rootDirectory, logFileDir));
   }
 
   // Get req.body to morgan
@@ -49,23 +59,13 @@ const createServer = () => {
 
   // Create a write stream (in append mode)
   const accessLogStream = fs.createWriteStream(
-    path.join(__dirname, './logs', 'request.log'),
+    path.join(rootDirectory, logFileDir, 'request.log'),
     { flags: 'a' },
   );
 
   // Setup the logger
-  app.use(
-    morgan(
-      ':method :url :status :response-time ms - :res[content-length] :body - :req[content-length]',
-    ),
-  );
-
-  app.use(
-    morgan(
-      ':method :url :status :response-time ms - :res[content-length] :body - :req[content-length]',
-      { stream: accessLogStream },
-    ),
-  );
+  app.use(morgan('tiny'));
+  app.use(morgan('combined', { stream: accessLogStream }));
 
   // Rate limiter
   app.use(rateLimiter.commonLimiter());
@@ -91,6 +91,9 @@ const createServer = () => {
       ),
     );
   });
+
+  // Error Logger
+  app.use(errorLogHandler);
 
   // Error handler
   app.use(errorHandler);

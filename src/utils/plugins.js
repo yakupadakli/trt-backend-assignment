@@ -9,7 +9,6 @@ const globalSettingsPlugin = (schema) => {
   });
 
   const transformFunction = (doc, ret) => {
-    delete ret._id;
     return ret;
   };
 

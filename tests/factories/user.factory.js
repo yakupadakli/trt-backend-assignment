@@ -1,6 +1,6 @@
 const { Factory } = require('rosie');
 const { Types } = require('mongoose');
-const faker = require('@faker-js/faker').faker;
+const { faker } = require('@faker-js/faker');
 
 const User = require('../../src/models/user.model');
 

@@ -29,7 +29,7 @@ class BaseDataAccess {
   }
 
   async _update(query, updateQuery) {
-    return this.BaseModel.findOneAndUpdate(query, updateQuery)
+    return this.BaseModel.findOneAndUpdate(query, updateQuery, { new: true })
       .lean({ virtuals: true })
       .exec();
   }

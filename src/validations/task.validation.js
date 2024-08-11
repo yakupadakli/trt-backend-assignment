@@ -25,7 +25,14 @@ const taskUpdateSchema = Joi.object({
   status: Joi.string().valid(...Object.values(TASK_STATUSES)),
 });
 
+const taskFilterSchema = Joi.object({
+  status: Joi.string().valid(...Object.values(TASK_STATUSES)),
+  startDate: Joi.date().iso(),
+  endDate: Joi.date().iso(),
+});
+
 module.exports = {
   taskCreateSchema,
   taskUpdateSchema,
+  taskFilterSchema,
 };

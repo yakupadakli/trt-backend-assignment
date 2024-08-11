@@ -3,18 +3,37 @@ require('express-async-errors');
 const httpStatus = require('http-status');
 
 const TaskService = require('../services/task.service');
+const { buildTaskFilterQuery, buildSortQuery } = require('../utils/queries');
 
 const taskService = new TaskService();
 
 const taskList = async (req, res) => {
   const {
-    user: { userId },
+    user: { id: userId },
   } = req;
+  const {
+    page = 1,
+    limit = 10,
+    sortBy = 'dueDate',
+    sortOrder = 'asc',
+  } = req.query;
+  const sort = buildSortQuery({ sortBy, sortOrder });
+  const filter = buildTaskFilterQuery(req.query);
 
-  const results = await taskService.getUserTasks(userId);
+  const options = {
+    page: parseInt(page),
+    limit: parseInt(limit),
+    sort,
+  };
+
+  const result = await taskService.getUserTasks(userId, options, filter);
   const response = {
     success: true,
-    result: results || [],
+    totalCount: result.totalDocs,
+    totalPages: result.totalPages,
+    currentPage: result.page,
+    limit: result.limit,
+    result: result.docs || [],
   };
   res.status(httpStatus.OK).json(response);
 };
@@ -22,7 +41,7 @@ const taskList = async (req, res) => {
 const taskDetail = async (req, res) => {
   const { taskId } = req.params;
   const {
-    user: { userId },
+    user: { id: userId },
   } = req;
 
   const result = await taskService.getUserTask(taskId, userId);
@@ -35,7 +54,7 @@ const taskDetail = async (req, res) => {
 
 const taskCreate = async (req, res) => {
   const {
-    user: { userId },
+    user: { id: userId },
   } = req;
   const taskData = req.body;
 
@@ -50,7 +69,7 @@ const taskCreate = async (req, res) => {
 const taskUpdate = async (req, res) => {
   const { taskId } = req.params;
   const {
-    user: { userId },
+    user: { id: userId },
   } = req;
   const taskData = req.body;
 
@@ -65,7 +84,7 @@ const taskUpdate = async (req, res) => {
 const taskDelete = async (req, res) => {
   const { taskId } = req.params;
   const {
-    user: { userId },
+    user: { id: userId },
   } = req;
 
   await taskService.deleteUserTask(taskId, userId);

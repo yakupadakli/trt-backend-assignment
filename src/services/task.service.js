@@ -6,8 +6,8 @@ class TaskService {
     this.dataAccess = new TaskDataAccess();
   }
 
-  async getUserTasks(userId) {
-    return await this.dataAccess.getUserTasks(userId);
+  async getUserTasks(userId, options = {}, filter = {}) {
+    return await this.dataAccess.getUserTasks(userId, options, filter);
   }
 
   async getUserTask(taskId, userId) {

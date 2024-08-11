@@ -2,11 +2,13 @@ const { Router } = require('express');
 
 const authenticate = require('../middlewares/auth');
 
-const { validateBody } = require('../middlewares/validate');
+const { validateBody, validateQuery } = require('../middlewares/validate');
 const {
   taskCreateSchema,
   taskUpdateSchema,
+  taskFilterSchema,
 } = require('../validations/task.validation');
+const { paginateQuerySchema } = require('../validations/common.validation');
 const {
   taskList,
   taskDetail,
@@ -19,7 +21,9 @@ const router = Router();
 
 router.use(authenticate);
 
-router.get('/', taskList);
+const paginateAndFilterSchema = paginateQuerySchema.concat(taskFilterSchema);
+
+router.get('/', validateQuery(paginateAndFilterSchema), taskList);
 router.get('/:taskId', taskDetail);
 router.post('/', validateBody(taskCreateSchema), taskCreate);
 router.patch('/:taskId', validateBody(taskUpdateSchema), taskUpdate);

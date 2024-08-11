@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { globalSettingsPlugin } = require('../utils/plugins');
 const { TASK_STATUSES } = require('../constants');
@@ -18,6 +19,7 @@ const TaskSchema = new mongoose.Schema({
 });
 
 TaskSchema.plugin(globalSettingsPlugin);
+TaskSchema.plugin(mongoosePaginate);
 
 const TaskModel = mongoose.model('Task', TaskSchema);
 

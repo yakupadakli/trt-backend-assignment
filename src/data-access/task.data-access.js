@@ -6,12 +6,12 @@ class TaskDataAccess extends BaseDataAccess {
     super(Task);
   }
 
-  async filterTasks(query = {}) {
-    return this._getAll(query);
+  async filterTasks(query = {}, options = {}) {
+    return this._getAllPaginated(query, options);
   }
 
-  async getUserTasks(userId) {
-    return this.filterTasks({ user: userId });
+  async getUserTasks(userId, options = {}, filter = {}) {
+    return this.filterTasks({ user: userId, ...filter }, options);
   }
 
   async getUserTask(taskId, userId) {

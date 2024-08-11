@@ -15,6 +15,12 @@ class BaseDataAccess {
       .exec();
   }
 
+  async _getAllPaginated(query = {}, options = {}) {
+    options.populate = this.populateOptions;
+    options.lean = { virtuals: true };
+    return this.BaseModel.paginate(query, options);
+  }
+
   async _get(query) {
     return this.BaseModel.findOne(query)
       .populate(this.populateOptions)

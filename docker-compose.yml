@@ -1,0 +1,27 @@
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: my-user
+      MONGO_INITDB_ROOT_PASSWORD: my-password
+
+  web:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mongo
+    environment:
+      DB_URL: mongo
+      DB_USER: my-user
+      DB_PASS: my-password
+      DB_NAME: trt-backend-assigment
+      DB_OPTION: authSource=admin
+      MONGO_URI_PREFIX: mongodb
+      PORT: 8080

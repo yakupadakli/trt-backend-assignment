@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/app.ts",
   "engines": {
-    "node": "21.7.1",
-    "npm": ">=10.5.0"
+    "node": "v21.7.1",
+    "npm": ">=10.8.2"
   },
   "scripts": {
     "start": "node src/app.js",
@@ -16,7 +16,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "gitleaks": "gitleaks detect -v",
-    "prepare": "lefthook install",
+    "prepare": "if [ -z \"$CI\" ]; then lefthook install || true; fi",
     "pre-commit": "lefthook run pre-commit",
     "pre-push": "lefthook run pre-push",
     "test": "NODE_ENV=test jest --detectOpenHandles --forceExit",
@@ -54,7 +54,6 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",

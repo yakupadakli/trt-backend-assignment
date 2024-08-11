@@ -33,7 +33,7 @@ const taskList = async (req, res) => {
     totalPages: result.totalPages,
     currentPage: result.page,
     limit: result.limit,
-    result: result.docs || [],
+    result: result.docs,
   };
   res.status(httpStatus.OK).json(response);
 };
@@ -47,7 +47,7 @@ const taskDetail = async (req, res) => {
   const result = await taskService.getUserTask(taskId, userId);
   const response = {
     success: true,
-    result: result || {},
+    result: result,
   };
   res.status(httpStatus.OK).json(response);
 };
@@ -61,7 +61,7 @@ const taskCreate = async (req, res) => {
   const result = await taskService.createUserTask(userId, taskData);
   const response = {
     success: true,
-    result: result || {},
+    result: result,
   };
   res.status(httpStatus.CREATED).json(response);
 };
@@ -76,7 +76,7 @@ const taskUpdate = async (req, res) => {
   const result = await taskService.updateUserTask(taskId, userId, taskData);
   const response = {
     success: true,
-    result: result || {},
+    result: result,
   };
   res.status(httpStatus.OK).json(response);
 };

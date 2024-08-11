@@ -16,6 +16,8 @@ const {
   taskUpdate,
   taskDelete,
 } = require('../controllers/task.controller');
+const mongoErrorHandler = require('../middlewares/mongoErrorHandler');
+const { TaskNotFoundError } = require('../errors/task.errors');
 
 const router = Router();
 
@@ -28,5 +30,9 @@ router.get('/:taskId', taskDetail);
 router.post('/', validateBody(taskCreateSchema), taskCreate);
 router.patch('/:taskId', validateBody(taskUpdateSchema), taskUpdate);
 router.delete('/:taskId', taskDelete);
+
+router.use((err, req, res, next) =>
+  mongoErrorHandler(err, req, res, next, TaskNotFoundError),
+);
 
 module.exports = router;

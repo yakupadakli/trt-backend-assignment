@@ -13,6 +13,10 @@ const ERROR_CODES = {
   // Task
   TASK_NOT_FOUND: 2000,
   TASK_ALREADY_EXISTS: 2100,
+
+  // Auth
+  NOT_AUTHORIZED: 3000,
+  AUTHENTICATION_ERROR: 3100,
 };
 
 module.exports = { ERROR_CODES };

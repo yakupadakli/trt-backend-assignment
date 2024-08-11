@@ -17,7 +17,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const RateLimiter = require('./middlewares/rateLimiter');
 
 const { errorLogHandler } = require('./logger/logHandler');
-const { stringFormat } = require('./utils/helper');
+const { stringFormat } = require('./utils/helpers');
 const { NO_ENDPOINT } = require('./constants/messages/error');
 const { NotFound } = require('./errors');
 

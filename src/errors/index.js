@@ -5,6 +5,7 @@ const { TOO_MANY_REQUESTS } = require('../constants/messages/error');
 const { ERROR_CODES } = require('../constants/error');
 const userErrors = require('./user.errors');
 const taskErrors = require('./task.errors');
+const authErrors = require('./auth.errors');
 
 class TooManyRequest extends ApiError {
   code = ERROR_CODES.TOO_MANY_REQUESTS;
@@ -42,4 +43,7 @@ module.exports = {
 
   // Task
   ...taskErrors,
+
+  // Auth
+  ...authErrors,
 };

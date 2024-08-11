@@ -1,7 +1,10 @@
 const httpStatus = require('http-status');
 
 const ApiError = require('./ApiError');
-const { TASK_ALREADY_EXISTS } = require('../constants/messages/error');
+const {
+  TASK_ALREADY_EXISTS,
+  TASK_NOT_FOUND,
+} = require('../constants/messages/error');
 const { ERROR_CODES } = require('../constants/error');
 
 class TaskAlreadyExistsError extends ApiError {
@@ -12,6 +15,15 @@ class TaskAlreadyExistsError extends ApiError {
   }
 }
 
+class TaskNotFoundError extends ApiError {
+  code = ERROR_CODES.TASK_NOT_FOUND;
+
+  constructor() {
+    super(TASK_NOT_FOUND, httpStatus.NOT_FOUND);
+  }
+}
+
 module.exports = {
   TaskAlreadyExistsError,
+  TaskNotFoundError,
 };

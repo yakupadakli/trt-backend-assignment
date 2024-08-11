@@ -25,7 +25,8 @@ class TaskDataAccess extends BaseDataAccess {
 
   async updateTask(query, taskData) {
     const { user, title, description } = taskData;
-    return this._update(query, { user, title, description });
+    const updateQuery = { $set: { user, title, description } };
+    return this._update(query, updateQuery);
   }
 
   async deleteTask(query) {

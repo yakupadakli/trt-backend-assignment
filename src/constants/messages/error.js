@@ -12,6 +12,10 @@ const USER_ALREADY_EXISTS = 'User already exists.';
 const TASK_NOT_FOUND = 'Task not found.';
 const TASK_ALREADY_EXISTS = 'Task already exists.';
 
+// Auth
+const NOT_AUTHORIZED = 'Not authorized.';
+const AUTHENTICATION_ERROR = 'Authentication error.';
+
 module.exports = {
   INTERNAL_SERVER_ERROR,
   NO_ENDPOINT,
@@ -26,4 +30,8 @@ module.exports = {
   // Task
   TASK_NOT_FOUND,
   TASK_ALREADY_EXISTS,
+
+  // Auth
+  NOT_AUTHORIZED,
+  AUTHENTICATION_ERROR,
 };

@@ -1,4 +1,7 @@
 const { Router } = require('express');
+
+const authenticate = require('../middlewares/auth');
+
 const { validateBody } = require('../middlewares/validate');
 const {
   taskCreateSchema,
@@ -13,6 +16,8 @@ const {
 } = require('../controllers/task.controller');
 
 const router = Router();
+
+router.use(authenticate);
 
 router.get('/', taskList);
 router.get('/:taskId', taskDetail);

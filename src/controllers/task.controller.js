@@ -7,8 +7,9 @@ const TaskService = require('../services/task.service');
 const taskService = new TaskService();
 
 const taskList = async (req, res) => {
-  // const { user: { userId } } = req;
-  const userId = '66b79bf80f8f896bd05a1866';
+  const {
+    user: { userId },
+  } = req;
 
   const results = await taskService.getUserTasks(userId);
   const response = {
@@ -20,8 +21,9 @@ const taskList = async (req, res) => {
 
 const taskDetail = async (req, res) => {
   const { taskId } = req.params;
-  // const { user: { userId } } = req;
-  const userId = '66b79bf80f8f896bd05a1866';
+  const {
+    user: { userId },
+  } = req;
 
   const result = await taskService.getUserTask(taskId, userId);
   const response = {
@@ -32,8 +34,9 @@ const taskDetail = async (req, res) => {
 };
 
 const taskCreate = async (req, res) => {
-  // const { user: { userId } } = req;
-  const userId = '66b79bf80f8f896bd05a1866';
+  const {
+    user: { userId },
+  } = req;
   const taskData = req.body;
 
   const result = await taskService.createUserTask(userId, taskData);
@@ -46,8 +49,9 @@ const taskCreate = async (req, res) => {
 
 const taskUpdate = async (req, res) => {
   const { taskId } = req.params;
-  // const { user: { userId } } = req;
-  const userId = '66b79bf80f8f896bd05a1866';
+  const {
+    user: { userId },
+  } = req;
   const taskData = req.body;
 
   const result = await taskService.updateUserTask(taskId, userId, taskData);
@@ -60,8 +64,9 @@ const taskUpdate = async (req, res) => {
 
 const taskDelete = async (req, res) => {
   const { taskId } = req.params;
-  // const { user: { userId } } = req;
-  const userId = '66b79bf80f8f896bd05a1866';
+  const {
+    user: { userId },
+  } = req;
 
   await taskService.deleteUserTask(taskId, userId);
   res.status(httpStatus.NO_CONTENT).send();

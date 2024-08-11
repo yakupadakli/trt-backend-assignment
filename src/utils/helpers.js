@@ -23,7 +23,15 @@ const parseAuthorizationHeader = (req) => {
   return tokenType === authTokenType ? token : '';
 };
 
+const getTomorrow = () => {
+  const now = new Date();
+  const tomorrow = new Date(now);
+  tomorrow.setDate(now.getDate() + 1);
+  return tomorrow;
+};
+
 module.exports = {
   stringFormat,
   parseAuthorizationHeader,
+  getTomorrow,
 };

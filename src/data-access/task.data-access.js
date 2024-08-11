@@ -19,13 +19,13 @@ class TaskDataAccess extends BaseDataAccess {
   }
 
   async createTask(taskData) {
-    const { user, title, description } = taskData;
-    return this._create({ user, title, description });
+    const { user, title, description, status, dueDate } = taskData;
+    return this._create({ user, title, description, status, dueDate });
   }
 
   async updateTask(query, taskData) {
-    const { user, title, description } = taskData;
-    const updateQuery = { $set: { user, title, description } };
+    const { user, title, description, status, dueDate } = taskData;
+    const updateQuery = { $set: { user, title, description, status, dueDate } };
     return this._update(query, updateQuery);
   }
 

@@ -11,6 +11,8 @@ const USER_ALREADY_EXISTS = 'User already exists.';
 // Task
 const TASK_NOT_FOUND = 'Task not found.';
 const TASK_ALREADY_EXISTS = 'Task already exists.';
+const TASK_DUE_DATE_ONE_DAY_IN_FUTURE =
+  'The due date must be at least one day in the future.';
 
 // Auth
 const NOT_AUTHORIZED = 'Not authorized.';
@@ -30,6 +32,7 @@ module.exports = {
   // Task
   TASK_NOT_FOUND,
   TASK_ALREADY_EXISTS,
+  TASK_DUE_DATE_ONE_DAY_IN_FUTURE,
 
   // Auth
   NOT_AUTHORIZED,

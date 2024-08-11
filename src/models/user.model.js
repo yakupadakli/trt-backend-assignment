@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { globalSettingsPlugin } = require('../utils/plugins');
 
@@ -13,6 +14,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.plugin(globalSettingsPlugin);
+UserSchema.plugin(mongoosePaginate);
 
 UserSchema.pre('save', async function (next) {
   if (this.isModified('password')) {

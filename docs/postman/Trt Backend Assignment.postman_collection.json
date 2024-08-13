@@ -10,6 +10,53 @@
       "name": "users",
       "item": [
         {
+          "name": "/users/profile/",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/users/profile/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "users", "profile", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/users/change-password/",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"oldPassword\": \"12345\",\n    \"newPassword\": \"1234\",\n    \"newPasswordConfirmation\": \"1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/users/change-password/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "users", "change-password", ""]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "/users/login/",
           "event": [
             {
@@ -218,7 +265,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"Sample Task 1\",\n    \"description\": \"Sample Task 1 Description\",\n    \"status\": \"Pending\",\n    \"dueDate\": \"2024-12-01T10:00:00\"\n}",
+              "raw": "{\n    \"title\": \"Sample Task 2\",\n    \"description\": \"Sample Task 2 Description\",\n    \"status\": \"Pending\",\n    \"dueDate\": \"2024-12-01T10:00:00\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -291,9 +338,9 @@
               }
             ],
             "url": {
-              "raw": "{{BASE_URL}}/auth/google/redirect",
+              "raw": "{{BASE_URL}}/api/v1/auth/google/redirect",
               "host": ["{{BASE_URL}}"],
-              "path": ["auth", "google", "redirect"]
+              "path": ["api", "v1", "auth", "google", "redirect"]
             }
           },
           "response": []

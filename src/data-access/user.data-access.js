@@ -22,6 +22,10 @@ class UserDataAccess extends BaseDataAccess {
   async getById(userId) {
     return this._get({ _id: userId });
   }
+
+  async changePassword(userId, newPassword) {
+    return this._update({ _id: userId }, { $set: { password: newPassword } });
+  }
 }
 
 module.exports = UserDataAccess;

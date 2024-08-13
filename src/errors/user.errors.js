@@ -4,6 +4,7 @@ const ApiError = require('./ApiError');
 const {
   USER_EMAIL_OR_PASSWORD_INCORRECT,
   USER_ALREADY_EXISTS,
+  CURRENT_PASSWORD_INCORRECT,
 } = require('../constants/messages/error');
 const { ERROR_CODES } = require('../constants/error');
 
@@ -23,7 +24,16 @@ class UserAlreadyExistsError extends ApiError {
   }
 }
 
+class CurrentPasswordIncorrectError extends ApiError {
+  code = ERROR_CODES.CURRENT_PASSWORD_INCORRECT;
+
+  constructor() {
+    super(CURRENT_PASSWORD_INCORRECT, httpStatus.UNAUTHORIZED);
+  }
+}
+
 module.exports = {
   EmailOrPasswordIncorrectError,
   UserAlreadyExistsError,
+  CurrentPasswordIncorrectError,
 };

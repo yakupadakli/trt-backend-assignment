@@ -7,6 +7,10 @@ const VALIDATION_ERROR = 'Validation error.';
 const USER_NOT_FOUND = 'User not found.';
 const USER_EMAIL_OR_PASSWORD_INCORRECT = 'Email or password is incorrect.';
 const USER_ALREADY_EXISTS = 'User already exists.';
+const USER_PASSWORDS_MUST_MATCH =
+  'New password and new password confirmation must match.';
+const CURRENT_PASSWORD_INCORRECT =
+  'Password does not match with the current password.';
 
 // Task
 const TASK_NOT_FOUND = 'Task not found.';
@@ -28,6 +32,8 @@ module.exports = {
   USER_NOT_FOUND,
   USER_EMAIL_OR_PASSWORD_INCORRECT,
   USER_ALREADY_EXISTS,
+  USER_PASSWORDS_MUST_MATCH,
+  CURRENT_PASSWORD_INCORRECT,
 
   // Task
   TASK_NOT_FOUND,

@@ -9,6 +9,7 @@ const config = require('../config');
 const {
   EmailOrPasswordIncorrectError,
   UserAlreadyExistsError,
+  CurrentPasswordIncorrectError,
 } = require('../errors');
 
 const { TOKEN_TYPES } = require('../constants');
@@ -74,6 +75,18 @@ class UserService {
       await this.dataAccess.createUser({ ...data, password });
       user = await this.dataAccess.findByEmail(email);
     }
+
+    const token = await this.generateToken(user);
+    return { ...token };
+  }
+
+  async changePassword(userId, oldPassword, newPassword) {
+    let user = await this.dataAccess.getById(userId);
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) throw new CurrentPasswordIncorrectError();
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user = await this.dataAccess.changePassword(userId, hashedPassword);
 
     const token = await this.generateToken(user);
     return { ...token };

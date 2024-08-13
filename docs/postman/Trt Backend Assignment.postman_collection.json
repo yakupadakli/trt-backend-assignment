@@ -1,0 +1,304 @@
+{
+  "info": {
+    "_postman_id": "c1dcfc6a-3c56-4dd1-b6b5-9fb650cf0b05",
+    "name": "Trt Backend Assignment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30185029"
+  },
+  "item": [
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "/users/login/",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.environment.set(\"TOKEN\", jsonData.result.token);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"john.doe@example.com\",\n    \"password\": \"12345\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/users/login/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "users", "login", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/users/register/",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"John\",\n    \"surname\": \"Doe\",\n    \"username\": \"john.doe\",\n    \"email\": \"john.doe@example.com\",\n    \"password\": \"12345\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/users/register/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "users", "register", ""]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "tasks",
+      "item": [
+        {
+          "name": "/tasks/",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/tasks/?limit=3&page=1&status=Pending&startDate=2024-12-01T00:00:00&endDate=2024-12-02T00:00:00&sortBy=createdAt&sortOrder=asc",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "tasks", ""],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "3"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "status",
+                  "value": "Pending"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2024-12-01T00:00:00"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2024-12-02T00:00:00"
+                },
+                {
+                  "key": "status",
+                  "value": "Completed",
+                  "disabled": true
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "asc"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/tasks/<id>/",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/tasks/66ba8a8a30cadc3a68a5877c/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "tasks", "66ba8a8a30cadc3a68a5877c", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/tasks/<id>/",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Sample Task 1 Update\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/tasks/66ba8a8a30cadc3a68a5877c/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "tasks", "66ba8a8a30cadc3a68a5877c", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/tasks/<id>/",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/tasks/66ba8f8b30cadc3a68a58793/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "tasks", "66ba8f8b30cadc3a68a58793", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/tasks/",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Sample Task 1\",\n    \"description\": \"Sample Task 1 Description\",\n    \"status\": \"Pending\",\n    \"dueDate\": \"2024-12-01T10:00:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/tasks/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "tasks", ""]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "/auth/google",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer 111",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/auth/google",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "auth", "google"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/auth/google/redirect",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer 111",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/google/redirect",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "google", "redirect"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

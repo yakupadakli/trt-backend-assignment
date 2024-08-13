@@ -7,6 +7,7 @@ const config = require('../../../src/config')();
 const {
   EmailOrPasswordIncorrectError,
   UserAlreadyExistsError,
+  CurrentPasswordIncorrectError,
 } = require('../../../src/errors');
 
 jest.mock('../../../src/data-access/user.data-access');
@@ -19,6 +20,7 @@ describe('User Service', () => {
 
   const mockJwtSign = jwt.sign;
   const mockBcryptCompare = bcrypt.compare;
+  const mockBcryptHash = bcrypt.hash;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -251,6 +253,63 @@ describe('User Service', () => {
       mockDataAccess.findByEmail.mockRejectedValue(new Error());
 
       await expect(userService.getGoogleUserToken({ email })).rejects.toThrow();
+    });
+  });
+
+  describe('changePassword', () => {
+    it('should change the password', async () => {
+      const user = await userMock.getUser();
+      const userId = user.id;
+      const oldPassword = 'oldPassword';
+      const newPassword = 'newPassword';
+      const hashedPassword = 'hashedPassword';
+
+      mockDataAccess.getById.mockResolvedValue(user);
+      mockDataAccess.changePassword.mockResolvedValue(user);
+      mockBcryptCompare.mockResolvedValue(true);
+      mockBcryptHash.mockResolvedValue(hashedPassword);
+
+      await userService.changePassword(userId, oldPassword, newPassword);
+
+      expect(mockDataAccess.getById).toHaveBeenCalledTimes(1);
+      expect(mockDataAccess.getById).toHaveBeenCalledWith(userId);
+
+      expect(mockBcryptCompare).toHaveBeenCalledTimes(1);
+      expect(mockBcryptCompare).toHaveBeenCalledWith(
+        oldPassword,
+        user.password,
+      );
+
+      expect(mockDataAccess.changePassword).toHaveBeenCalledTimes(1);
+      expect(mockDataAccess.changePassword).toHaveBeenCalledWith(
+        userId,
+        hashedPassword,
+      );
+    });
+
+    it('should throw an error when the password is incorrect', async () => {
+      const userId = 'userId';
+      const oldPassword = 'oldPassword';
+      const newPassword = 'newPassword';
+
+      mockDataAccess.getById.mockResolvedValue({ password: oldPassword });
+      mockBcryptCompare.mockResolvedValue(false);
+
+      await expect(
+        userService.changePassword(userId, oldPassword, newPassword),
+      ).rejects.toThrow(CurrentPasswordIncorrectError);
+    });
+
+    it('should throw an error when an error occurs', async () => {
+      const userId = 'userId';
+      const oldPassword = 'oldPassword';
+      const newPassword = 'newPassword';
+
+      mockDataAccess.getById.mockRejectedValue(new Error());
+
+      await expect(
+        userService.changePassword(userId, oldPassword, newPassword),
+      ).rejects.toThrow();
     });
   });
 });

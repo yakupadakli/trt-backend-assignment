@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const { Types } = require('mongoose');
 
 const UserFactory = require('../../factories/user.factory');
@@ -132,6 +134,19 @@ describe('UserDataAccess', () => {
       const foundUser = await userDataAccess.getById(invalidUserId);
 
       expect(foundUser).toBeNull();
+    });
+  });
+
+  describe('changePassword', () => {
+    it('should change the password', async () => {
+      const newPassword = 'newPassword';
+      const hashPassword = await bcrypt.hash(newPassword, 10);
+
+      await userDataAccess.changePassword(user.id, hashPassword);
+
+      const foundUser = await userDataAccess.getById(user.id);
+
+      expect(foundUser.password).toBe(hashPassword);
     });
   });
 });

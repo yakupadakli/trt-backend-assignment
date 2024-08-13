@@ -37,6 +37,8 @@
       "/src/config/",
       "/src/constants/",
       "/src/errors/",
+      "/src/models",
+      "/src/middlewares/",
       "/tests/"
     ],
     "testPathIgnorePatterns": [

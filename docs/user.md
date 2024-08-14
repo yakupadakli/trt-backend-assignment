@@ -95,3 +95,80 @@ HTTP/1.1 200 OK
   }
 }
 ```
+
+### Profile
+
+#### Request
+
+```http request
+GET /api/v1/users/profile/ HTTP/1.1
+Host: 127.0.0.1:8080
+Authorization: Bearer <token>
+```
+
+```shell
+curl --location 'http://127.0.0.1:8080/api/v1/users/profile/' \
+--header 'Authorization: Bearer <token>'
+```
+
+#### Response
+
+```http request
+HTTP/1.1 200 OK
+```
+
+```json
+{
+  "success": true,
+  "result": {
+    "_id": "66bbee95834f903af1cdf5bf",
+    "username": "john.doe",
+    "name": "John",
+    "surname": "Doe",
+    "email": "john.doe@example.com",
+    "password": "$2b$10$IHu4RJa39I/uQZdJpteArOLJ33O0e60ohzzwpFcAF4GqoVKypksoy",
+    "createdAt": "2024-08-13T23:39:01.357Z",
+    "updatedAt": "2024-08-13T23:39:12.008Z",
+    "id": "66bbee95834f903af1cdf5bf"
+  }
+}
+```
+
+### Change Password
+
+#### Request
+
+```http request
+PATCH /api/v1/users/change-password/ HTTP/1.1
+Host: 127.0.0.1:8080
+Authorization: Bearer <token>
+
+{
+    "oldPassword": "1234",
+    "newPassword": "12345",
+    "newPasswordConfirmation": "12345"
+}
+```
+
+```shell
+curl --location --request PATCH 'http://127.0.0.1:8080/api/v1/users/change-password/' \
+--header 'Authorization: Bearer <token>' \
+--data '{
+    "oldPassword": "1234",
+    "newPassword": "12345",
+    "newPasswordConfirmation": "12345"
+}'
+```
+
+#### Response
+
+```http request
+{
+    "success": true,
+    "result": {
+        "token": "<token>",
+        "expiresIn": "1d",
+        "tokenType": "Bearer"
+    }
+}
+```
